@@ -34,13 +34,6 @@ router.post('/signup', async (req, res) => {
     }).catch(err => {
         console.log(err)
     })
-        
-      
-    
-
-    
-
-
 })
 
 //sigin
@@ -58,7 +51,7 @@ router.post('/signin', async (req, res) => {
     if (pwcorrect) {
         const jwttoken = jwt.sign({ _id: dbuser._id }, "tokenit")
         
-        return  res.status(200).json({token:jwttoken})
+        return  res.status(200).json({token:jwttoken,authuser:{_id:dbuser._id,name:dbuser.name,email:dbuser.email}})
     }
     return res.status(400).json({error:"incorrect password"})
     

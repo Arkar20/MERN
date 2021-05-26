@@ -1,31 +1,48 @@
 import React from 'react';
 import { Link } from "react-router-dom"
-import InputField from "../components/InputField"
+import { useState } from 'react'
+import axios from 'axios'
+import {successMessage,errorMessage} from '../components/AlertMessage'
+import {useHistory} from 'react-router-dom'
 
 const Signin = () => {
 
-const showlog = (param) => {
-    console.log(param)
-}
+     const history =useHistory()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+const SignIn = () => {
+        axios.post('/signin', {  email, password }).then(res => {
+            console.log(res.data)
+            successMessage("Login Successful")
+            history.push('/signin')
+        }).catch(error => {
+            errorMessage(error.response.data.error)
+        })
+    }
     return (
            <div className="mycard">
                     <div className="card auth-card input-field">
-                        <h2>Instagram</h2>
-                <InputField
-                    type="button"
-                    placeholder="Please enter Name"
-                    fun={showlog}
-                    message="showing from parent"
-                />
+                        <h2>Sign In</h2>
+             
                         <input
-                        type="password"
-                    placeholder="password"
-                
+                            type="text"
+                            placeholder="E-Mail"
+                            value={email}
+                            onChange={(e)=>setEmail(e.target.value)}
                         />
-                        <button className="btn btn-default">
+                        <input
+                            type="password"
+                            placeholder="password"
+                            value={password}
+                            onChange={(e)=>setPassword(e.target.value)}
+                        />
+                        <button
+                            onClick={()=>SignIn()}
+                            className="btn btn-default">
                             Login
                         </button>
-                        <h5>
+                            <h5>
                             <Link to="/signup">Dont have an account ?</Link>
                         </h5>
                         <h6>
