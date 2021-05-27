@@ -13,11 +13,15 @@ const Signin = () => {
 
 const SignIn = () => {
         axios.post('/signin', {  email, password }).then(res => {
-            console.log(res.data)
+        
+            localStorage.setItem('token', res.data.token)
+            console.log(res.data.token)
+            localStorage.setItem('signin_user',res.data.authuser)
             successMessage("Login Successful")
-            history.push('/signin')
+            history.push('/post')
         }).catch(error => {
-            errorMessage(error.response.data.error)
+            if(error)
+                errorMessage(error.response.data.error)
         })
     }
     return (

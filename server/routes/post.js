@@ -33,13 +33,13 @@ router.get('/posts/user/:user', authentication, async (req, res) => {
 })
 
 router.post('/posts', authentication, async (req, res) => {
-    
-    const { title, body } = req.body
+     console.log(req.header.authorization)
+    const { title, body ,pic} = req.body
 
-    if (!title || !body)
-     return res.status(433).json({error:"These fields should not be empty"})
+    if (!title || !body || !pic)
+        return res.status(433).json({error:"These fields should not be empty"})
         
-    const createPost = new Post({ title, body,postowner:req.authuserdata})
+    const createPost = new Post({ title, body,postowner:req.authuserdata,pic})
      const post= await createPost.save()
 
     return res.status(200).json({post})
