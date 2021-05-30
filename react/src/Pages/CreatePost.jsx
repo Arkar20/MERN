@@ -26,8 +26,8 @@ const CreatePost = () => {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             }).then((res) => {
-                                console.log(res.data);
-                                successMessage("Congrats You have Uploaded a Post!")
+                successMessage("Congrats You have Uploaded a Post!")
+                history.push('/posts')
                         }).catch(error=>errorMessage(error.response.data.error))
     }
     const uploadImage = (e) => {
