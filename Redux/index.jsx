@@ -73,6 +73,43 @@ const todoApp = combineReducers({
 const { createStore } = Redux;
 const store = createStore(todoApp);
 
+const { Component } = React
+let globalid=0
+class TodoApp extends Component {
+  render() {
+    // console.log(this.props.todos)
+    return (
+      <div>
+        <input ref={node =>this.input=node }/>
+        <button onClick={() =>{
+          store.dispatch({
+            type: "ADD_TODO",
+            id: globalid++, text: this.input.value, completed: false
+          })
+          this.input.value=''
+        }}> Add To Do</button>
+
+      <ul>
+        {this.props.todos.map(t => (
+          <li key={t.id}>{t.text }</li>
+        ))}
+      </ul>
+      </div>
+    )
+  }
+}
+
+const render=() => {
+  ReactDOM.render(
+    <TodoApp
+      todos={store.getState().todos} />,
+    document.getElementById('root')
+  )
+}
+
+store.subscribe(render);
+render()
+
 console.log('Initial state:');
 console.log(store.getState());
 console.log('--------------');
