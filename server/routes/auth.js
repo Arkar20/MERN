@@ -39,12 +39,15 @@ router.post('/signup', async (req, res) => {
 //sigin
 router.post('/signin', async (req, res) => {
     const { email, password } = req.body
-    
     // validaion on null
     if (!email || !password)
         return res.status(422).json({ error: "Filed cannot be null" })
     
    const dbuser= await User.findOne({email})
+    
+    if (!dbuser)
+        return res.status(422).json({ error: "Seems like you have not registered yet!" })
+        
     
     const pwcorrect =await bcrypt.compare(password,dbuser.password )
     

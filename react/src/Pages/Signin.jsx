@@ -1,22 +1,25 @@
 import React from 'react';
 import { Link } from "react-router-dom"
-import { useState } from 'react'
+import { useState,useContext } from 'react'
 import axios from 'axios'
 import {successMessage,errorMessage} from '../components/AlertMessage'
 import {useHistory} from 'react-router-dom'
+import {PostContext} from '../App'
+
 
 const Signin = () => {
-
-     const history =useHistory()
+    const { state, dispatch } = useContext(PostContext)
+    console.log(state)
+    
+    const history =useHistory()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
 const SignIn = () => {
         axios.post('/signin', {  email, password }).then(res => {
-        
             localStorage.setItem('token', res.data.token)
-            console.log(res.data.token)
-            localStorage.setItem('signin_user',res.data.authuser)
+            localStorage.setItem('signin_user',JSON.stringify(res.data.authuser))
+            dispatch({type:'NEW_USER',payload:localStorage.getItem('signin_user')})
             successMessage("Login Successful")
             history.push('/post')
         }).catch(error => {

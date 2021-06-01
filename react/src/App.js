@@ -1,34 +1,23 @@
-import React from 'react';
+import {React,createContext,useReducer} from 'react';
 import Navbar from "./components/Navbar"
-import { BrowserRouter, Route } from "react-router-dom"
-import Signin from "./Pages/Signin"
-import Signup from "./Pages/Signup"
-import Profile from "./Pages/Profile"
-import Post from "./Pages/Post"
-import CreatePost from "./Pages/CreatePost"
-
+import { BrowserRouter } from "react-router-dom"
+import WebRoutes from "./routes/RouteWeb"
 import "./App.css"
+import postReducer from "./Reducers/postReducer"
+
+export const PostContext = createContext()
+
 const App = () => {
+  const [state, dispatch] = useReducer(postReducer,null)
+  
   return (
     <>
-      <BrowserRouter>
-          <Navbar />
-          <Route path="/signin">
-            <Signin />
-          </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
-          <Route path="/posts">
-            <Post />
-            </Route>
-          <Route path="/signup">
-            <Signup />
-            </Route>
-          <Route path="/post">
-            <CreatePost />
-            </Route>
-      </BrowserRouter>
+      <PostContext.Provider value={{state,dispatch}}>
+          <BrowserRouter>
+            <Navbar />
+            <WebRoutes />
+        </BrowserRouter>
+       </PostContext.Provider>
 
   </> 
   )

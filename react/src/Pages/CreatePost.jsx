@@ -7,12 +7,14 @@ import {successMessage,errorMessage} from '../components/AlertMessage'
 import {useHistory} from 'react-router-dom'
 
 const CreatePost = () => {
-      const history =useHistory()
+    
+    const history =useHistory()
     const [title, setTitle] = useState("")
     const [body, setBody] = useState("")
     const [image, setImage] = useState()
     const [progress, setProgress] = useState(false)
     const [uploadedImg, setUploadedImg] = useState(false)
+
     useEffect(() => {
        if(image)
           uploadImage()
