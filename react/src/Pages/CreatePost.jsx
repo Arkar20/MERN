@@ -1,17 +1,17 @@
 import React from 'react';
-import { useState,useEffect } from 'react'
+import { useState,useEffect,useContext } from 'react'
 import axios from 'axios'
 import "../App.css"
 
 import {successMessage,errorMessage} from '../components/AlertMessage'
 import {useHistory} from 'react-router-dom'
-
+import {PostContext} from "../App"
 const CreatePost = () => {
-    
+    const { dispatch } = useContext(PostContext)
     const history =useHistory()
     const [title, setTitle] = useState("")
     const [body, setBody] = useState("")
-    const [image, setImage] = useState()
+    const [image, setImage] = useState("")
     const [progress, setProgress] = useState(false)
     const [uploadedImg, setUploadedImg] = useState(false)
 
@@ -27,7 +27,8 @@ const CreatePost = () => {
             headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
-            }).then((res) => {
+        }).then((res) => {
+            dispatch({ type: "ADD_POST", payload: res.data.post })
                 successMessage("Congrats You have Uploaded a Post!")
                 history.push('/posts')
                         }).catch(error=>errorMessage(error.response.data.error))
@@ -90,10 +91,10 @@ const CreatePost = () => {
             <div className="file-path-wrapper">
                 <input className="file-path validate" type="text" />
             </div>
-                    <div style={{ display: 'block' }}>
+                    <div style={{ display: 'block',width:"100%" }}>
                         {
                             progress && <progress value={progress} max="100" style={{ padding: "5px" }}>
-                                 <span>{ progress} %</span>
+                                         <span>{ progress} %</span>
                             </progress>
                         
                         }

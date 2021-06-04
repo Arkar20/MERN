@@ -14,6 +14,9 @@ const postSchema = mongoose.Schema({
         type: String,
         default:null
     },
+    likes: [
+        {type:ObjectId,default:false}
+    ],
     postowner: {
         type: ObjectId,
         ref: "User",

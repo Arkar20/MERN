@@ -61,3 +61,10 @@ a{
 .material-icons:hover{
   cursor: pointer;
 }
+
+.react {
+  transform: scale(1.5,1.5)
+}
+
+
+

@@ -46,6 +46,32 @@ router.post('/posts', authentication, async (req, res) => {
 
 
 })
+router.put('/posts/like',authentication, (req, res) => {
+
+    Post.findByIdAndUpdate(req.body.post_id, {
+        $push:{likes:req.authuserdata.id}
+    }, {
+        new:true
+    }).exec((error, result) => {
+        if (error)
+            return res.status(433).json({ error })
+       
+        return res.status(200).json({result})
+    })
+})
+router.put('/posts/unlike',authentication, (req, res) => {
+
+    Post.findByIdAndUpdate(req.body.post_id, {
+        $pull:{likes:req.authuserdata.id}
+    }, {
+        new:true
+    }).exec((error, result) => {
+        if (error)
+            return res.status(433).json({ error })
+       
+        return res.status(200).json({result})
+    })
+})
 
 
 module.exports =router

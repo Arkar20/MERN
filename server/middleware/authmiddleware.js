@@ -6,7 +6,6 @@ const User = mongoose.model('User')
 const authentication = async (req, res, next) => {
     
     const { authorization } = req.headers
-    console.log(authorization)
     if (!authorization)
             return res.status(401).json({ message: "Please login first." })
         
@@ -15,7 +14,7 @@ const authentication = async (req, res, next) => {
     const jwttoken = jwt.verify(token, 'tokenit')
 
     if (!jwttoken)
-        return res.status(500).json({message:"Invalid"})
+        return res.status(500).json({message:"You Need to Login first"})
     
         let userisauth=await User.findById(jwttoken._id)
 
