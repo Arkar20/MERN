@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const {ObjectId}=mongoose.Schema.Types
 const userSchema = mongoose.Schema({
     name: {
        type: String,
@@ -12,7 +12,14 @@ const userSchema = mongoose.Schema({
     password: {
        type: String,
         require:true
-    }
+    },
+    followers: [{
+      followedid: {
+        type: ObjectId,
+        ref: "User",
+        
+      }
+    }]
 })
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {

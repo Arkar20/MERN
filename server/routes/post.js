@@ -6,10 +6,13 @@ const Post=mongoose.model('Posts')
 
 router.get('/posts',async (req, res) => {
    
-    const posts = await Post.find({}).populate('postowner',"_id name")
+  try  {const posts = await Post.find({}).populate('postowner', "_id name").populate('comments.userid',"_id name").exec()
     
     return res.status(200).json({posts})
-    
+  }
+  catch {
+    return res.status(204).end()
+    }
 })
 
 router.get('/posts/:post', authentication, async (req, res) => {

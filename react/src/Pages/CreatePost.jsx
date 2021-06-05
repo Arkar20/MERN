@@ -95,7 +95,7 @@ const CreatePost = () => {
                         {
                             progress && <progress value={progress} max="100" style={{ padding: "5px" }}>
                                          <span>{ progress} %</span>
-                            </progress>
+                                  </progress>
                         
                         }
                       

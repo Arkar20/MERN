@@ -2,7 +2,8 @@ const express = require('express')
 const app = express()
 const mongoose=require('mongoose')
 const PORT = 5000
-
+const commentRoute=require('./routes/comment')
+const followRoute=require('./routes/follow')
 
 mongoose.connect('mongodb+srv://arkar:ooE8r1O3eyxMjZpp@cluster0.m6cfn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
     {
@@ -31,6 +32,9 @@ app.use(express.json())
 
 app.use(require('./routes/auth'))
 app.use(require('./routes/post'))
+app.use('/api',commentRoute)
+app.use('/api', followRoute)
+
 
 app.listen(PORT, () => {
     console.log('server is running on port ',PORT)
