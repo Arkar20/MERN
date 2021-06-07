@@ -12,36 +12,29 @@ const WebRoutes = () => {
 
   useEffect(() => {
     if (!user) {
-         
       history.push('/signin')
-      return   errorMessage("You need to login first!")
-
+      return errorMessage("You need to login first!")
     }
-    history.push('/posts')
-    
   }, [])
   
  
   return (
     <Switch>
-
-   
-    <Route path="/signin">
+         <Route path="/signin">
             <Signin />
-          </Route>
-          <Route  path="/profile/:userid">
-            <Profile />
-          </Route>
-          <Route path="/posts">
-            <Post />
             </Route>
-         
-          <Route path="/signup">
-            <Signup />
+            <Route  path="/profile/:userid" >
+              <Profile />
             </Route>
-          <Route path="/post">
-            <CreatePost />
-      </Route>
+            <Route path="/posts">
+              <Post />
+              </Route>
+            <Route path="/signup">
+              <Signup />
+              </Route>
+            <Route path="/post">
+              <CreatePost />
+          </Route>
        </Switch>
   )
 }

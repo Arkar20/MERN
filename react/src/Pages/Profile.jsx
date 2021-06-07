@@ -3,14 +3,15 @@ import { useParams } from 'react-router-dom'
 import LoadingStatus from '../components/LoadingStatus'
 import axios from 'axios'
 
-const ProfileLoaded = ({ profile }) => {
+const ProfileLoaded = ({ profile,follow }) => {
+    
     
 
    
     return (
          <>
             
-                <div style={{ display: 'flex', justifyContent: 'start',marginTop:"20px"}} class="container">
+                <div style={{ display: 'flex', justifyContent: 'start',marginTop:"20px"}} className="container">
                     <div className="profile-pic" style={{width:"60%"}}>
                     <img
                         alt="title"
@@ -26,7 +27,7 @@ const ProfileLoaded = ({ profile }) => {
                     <h6>100 following</h6>
                     </div>
 
-                    <button className="btn btn-primary">Follow</button>
+                    {follow && <button className="btn btn-primary">Follow</button>}
                  
                 </div>
             </div>
@@ -49,16 +50,23 @@ const ProfileLoaded = ({ profile }) => {
 const Profile = () => {
     const { userid } = useParams();
     const [profile, setProfile] = useState(null)
-    console.log(userid)
-    useEffect(() => {
-       axios.get(`/profile/${userid}`).then(res=>setProfile(res.data.profile))
-    }, [profile])
+    const [visible, setVisible] = useState(true)
+    useEffect(() =>
+    {
+        if(!profile)
+            axios.get(`/profile/${userid}`).then(res => {
+                setProfile(res.data.profile)
+              
+            })
+        
+    },[profile])
 
-
+    
+    
 
     return (
         profile
-        ? <ProfileLoaded profile={profile}/>
+            ? <ProfileLoaded profile={profile} follow={visible}/>
         :<LoadingStatus />
 
     )

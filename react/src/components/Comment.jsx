@@ -23,16 +23,16 @@ const Comment = ({ post }) => {
                     onChange={(e)=>setComment(e.target.value)}
                 />
                     </form>
-            <p onClick={() => setVisible(true)}>{post.comments.length}  </p>
+            <p onClick={() => setVisible(!visible)}>{post.comments.length} comments  </p>
            
                 <div>
                 {
-                    post.comments.map(comment => {
+                  visible &&  post.comments.map(comment => {
                         return (
-                           <>
+                           <div key={comment._id}>
                             <p>{comment.body}</p>
                             <p>{comment.userid.name}</p>
-                        </>
+                        </div>
                        )
                     }
                     

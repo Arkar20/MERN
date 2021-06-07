@@ -1,10 +1,10 @@
-import axios from 'axios'
-import { React,useContext,useState } from 'react'
+import { React,useContext } from 'react'
 import { PostContext } from '../App'
 import Icon from "./Icon"
-import {successMessage} from '../components/AlertMessage'
 import Comment from "./Comment"
+import {useHistory} from "react-router-dom"
 const SinglePost = ({ post }) => {
+    const history=useHistory()
     const auth_user = JSON.parse(localStorage.getItem('signin_user'));
     const alreadyLiked = Boolean(post.likes.includes(auth_user._id))
     const { actions } = useContext(PostContext)
@@ -18,14 +18,16 @@ const SinglePost = ({ post }) => {
                 
         }
    
-    
+    const profilelink = () => {
+            history.push(`/profile/${post.postowner.id}`)
+        }
 
   
     return (
         <>
              <div className="home" key={post.id}>
                        <div className="card home-card">
-                    <h5 style={{ padding: "5px" }}>
+                    <h5 style={{ padding: "5px" }} onClick={profilelink}>
                                     { post.postowner && post.postowner.name}
                     </h5>
                             <div className="card-image">

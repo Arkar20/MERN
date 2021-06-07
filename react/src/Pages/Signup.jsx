@@ -1,25 +1,26 @@
-import React from 'react';
-import { useState } from 'react'
+import { useState,useContext, React } from 'react'
 import axios from 'axios'
 import {successMessage,errorMessage} from '../components/AlertMessage'
 import {useHistory} from 'react-router-dom'
-
+import {PostContext} from "../App"
 
 const Signup = () => {
     const history =useHistory()
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const {userstate,useractions}=useContext(PostContext)
 
-   
 
     const signUp = () => {
-        axios.post('/signup', { name, email, password }).then(res => {
-            successMessage(res.data.message)
-            history.push('/signin')
-        }).catch(error => {
-            errorMessage(error.response.data.error)
-        })
+        const data={name,email,password}
+        useractions.signup(data)
+        // axios.post('/signup', { name, email, password }).then(res => {
+        //     successMessage(res.data.message)
+        //     history.push('/signin')
+        // }).catch(error => {
+        //     errorMessage(error.response.data.error)
+        // })
     }
 
     return (

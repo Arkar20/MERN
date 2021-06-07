@@ -8,24 +8,24 @@ import {PostContext} from '../App'
 
 
 const Signin = () => {
-    const { state, dispatch } = useContext(PostContext)
-    console.log(state)
+    const { userstate,useractions } = useContext(PostContext)
     
     const history =useHistory()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-
-const SignIn = () => {
-        axios.post('/signin', {  email, password }).then(res => {
-            localStorage.setItem('token', res.data.token)
-            localStorage.setItem('signin_user',JSON.stringify(res.data.authuser))
-            dispatch({type:'NEW_USER',payload:localStorage.getItem('signin_user')})
-            successMessage("Login Successful")
-            history.push('/post')
-        }).catch(error => {
-            if(error)
-                errorMessage(error.response.data.error)
-        })
+    console.log(userstate)
+    const SignIn = () => {
+        useractions.signin()
+        // axios.post('/signin', {  email, password }).then(res => {
+        //     localStorage.setItem('token', res.data.token)
+        //     localStorage.setItem('signin_user',JSON.stringify(res.data.authuser))
+        //     dispatch({type:'NEW_USER',payload:localStorage.getItem('signin_user')})
+        //     successMessage("Login Successful")
+        //     history.push('/posts')
+        // }).catch(error => {
+        //     if(error)
+        //         errorMessage(error.response.data.error)
+        // })
     }
     return (
            <div className="mycard">

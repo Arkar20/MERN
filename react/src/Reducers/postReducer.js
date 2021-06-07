@@ -32,13 +32,11 @@ export const types = {
 const postReducer = (state=[],action) => {
     switch (action.type) {
         case (types.FETCH_ALL_POSTS):
-           
             return action.payload
         case (types.CREATE_POST):
             return [...state,action.payload]
         case (types.LIKE_THE_POST):
-            return state.map(post => (togglelike(post, action))
-            )
+            return state.map(post => (togglelike(post, action)))
         case (types.UNLIKE_THE_POST):
             return state.map(post => (togglelike(post, action)))
         case (types.ADD_COMMENT):
