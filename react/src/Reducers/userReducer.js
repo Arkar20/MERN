@@ -1,6 +1,6 @@
 const userReducer = (state=[],action) => {
     switch (action.type) {
-        case ("NEW_USER"):
+        case ("GET_PROFILE"):
             return action.payload
         default:
             return state

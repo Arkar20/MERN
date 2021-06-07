@@ -3,17 +3,17 @@ import { useEffect,useContext } from "react"
 import axios from 'axios';
 import {PostContext} from '../App'
 import SinglePost from '../components/SinglePost'
+import LoadingStatus from '../components/LoadingStatus';
 
 const Post = () => {
-    const {state,dispatch}=useContext(PostContext)
+    const {state,actions}=useContext(PostContext)
     useEffect(() => {
         if (!state) {
-         axios.get('/posts').then(res => {
-             dispatch({ type: "FETCH_ALL_POSTS", payload: res.data.posts })
-           
-        })    
+            actions.fetchAllPosts();
         }
-    }, [state,dispatch])
+    }, [state])
+
+
     return (
         <>
             {
@@ -25,11 +25,7 @@ const Post = () => {
                             <SinglePost post={post} key={post.id}  />
                     ))
                    
-                    : <div style={{ width: "100vw" }}>
-                        <div className="progress">
-                            <div className="indeterminate"></div>
-                        </div>
-                    </div>
+                    :<LoadingStatus />
             }
                    </>
     )

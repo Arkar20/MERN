@@ -7,7 +7,7 @@ const togglelike = (state= null, action)=>{
 
             return { ...state, likes: [...state.likes, action.payload.auth_user._id] }
         
-        case ("DISLIKE_THE_POST"):
+        case (types.UNLIKE_THE_POST):
             if (state.id !== action.payload.id)
                     return state
 
@@ -20,19 +20,37 @@ const togglelike = (state= null, action)=>{
 
 }
 
+export const types = {
+    FETCH_ALL_POSTS: "FETCH_ALL_POSTS",
+    LIKE_THE_POST: "LIKE_THE_POST",
+    UNLIKE_THE_POST: 'UNLIKE_THE_POST',
+    CREATE_POST: "CREATE_POST",
+    ADD_COMMENT:"ADD_COMMENT",
+    
+}
 
 const postReducer = (state=[],action) => {
     switch (action.type) {
-        case ("FETCH_ALL_POSTS"):
+        case (types.FETCH_ALL_POSTS):
            
             return action.payload
-        case ("ADD_POST"):
-            return [...state, action.payload]
-        case ("LIKE_THE_POST"):
+        case (types.CREATE_POST):
+            return [...state,action.payload]
+        case (types.LIKE_THE_POST):
             return state.map(post => (togglelike(post, action))
             )
-        case ("DISLIKE_THE_POST"):
+        case (types.UNLIKE_THE_POST):
             return state.map(post => (togglelike(post, action)))
+        case (types.ADD_COMMENT):
+            return state.map(post => {
+                if (post.id !== action.payload.id) {
+                    return post
+                }
+                return {
+                    ...post,
+                    comments:action.payload.comments
+                }
+            })
     
         default:
             return state

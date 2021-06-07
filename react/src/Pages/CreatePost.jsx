@@ -2,13 +2,12 @@ import React from 'react';
 import { useState,useEffect,useContext } from 'react'
 import axios from 'axios'
 import "../App.css"
+import { PostContext } from "../App"
+import Progress from "../components/Progress"
 
-import {successMessage,errorMessage} from '../components/AlertMessage'
-import {useHistory} from 'react-router-dom'
-import {PostContext} from "../App"
+
 const CreatePost = () => {
-    const { dispatch } = useContext(PostContext)
-    const history =useHistory()
+    const { actions } = useContext(PostContext)
     const [title, setTitle] = useState("")
     const [body, setBody] = useState("")
     const [image, setImage] = useState("")
@@ -22,16 +21,11 @@ const CreatePost = () => {
 
     const uploadPost = (e) => {
         // console.log(uploadedImg)
+        const data = { title, body, pic: uploadedImg }
         e.preventDefault();
-        axios.post('/posts', { title, body, pic: uploadedImg }, {
-            headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-        }).then((res) => {
-            dispatch({ type: "ADD_POST", payload: res.data.post })
-                successMessage("Congrats You have Uploaded a Post!")
-                history.push('/posts')
-                        }).catch(error=>errorMessage(error.response.data.error))
+         actions.createPost(data);
+      
+       
     }
     const uploadImage = (e) => {
        
@@ -91,15 +85,7 @@ const CreatePost = () => {
             <div className="file-path-wrapper">
                 <input className="file-path validate" type="text" />
             </div>
-                    <div style={{ display: 'block',width:"100%" }}>
-                        {
-                            progress && <progress value={progress} max="100" style={{ padding: "5px" }}>
-                                         <span>{ progress} %</span>
-                                  </progress>
-                        
-                        }
-                      
-                </div>
+             <Progress progress={progress} />
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <button className="btn waves-effect btn-primary"  >

@@ -2,7 +2,7 @@ import {React} from 'react';
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
-
+  const profile=JSON.parse(localStorage.getItem('signin_user'))
   const state=Boolean(localStorage.getItem("signin_user"))
 
   const filteredLinks = () => {
@@ -24,7 +24,7 @@ const Navbar = () => {
           <Link to="/post">New Post</Link>
        </li>
         <li>
-          <Link to="/profile">Profile</Link>
+          <Link to={`/profile/${profile._id}`}>Profile</Link>
        </li>
     </>
     ]

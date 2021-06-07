@@ -29,15 +29,13 @@ const WebRoutes = () => {
     <Route path="/signin">
             <Signin />
           </Route>
-          <Route path="/profile">
+          <Route  path="/profile/:userid">
             <Profile />
           </Route>
           <Route path="/posts">
             <Post />
             </Route>
-          <Route path="/user/:id">
-             <Post />
-            </Route>
+         
           <Route path="/signup">
             <Signup />
             </Route>

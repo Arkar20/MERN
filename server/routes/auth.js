@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const {authentication}=require('../middleware/authmiddleware')
 const router = express.Router()
 const User = mongoose.model('User')
-
+const Post=mongoose.model('Posts')
 router.get('/authtest',authentication ,(req,res) => {
    return  res.json({ message:"auth works"})
 })
@@ -58,6 +58,14 @@ router.post('/signin', async (req, res) => {
     }
     return res.status(400).json({error:"incorrect password"})
     
+})
+
+//profile
+router.get('/profile/:user', async (req, res) => {
+    const userid = req.params.user
+    const user= await User.findById(userid).catch(err=>res.status(500).json({err}))
+    const posts=await Post.find({postowner:userid}).catch(err=>res.send(err))
+    return res.status(200).json({profile:{user,posts}})
 })
 
 module.exports = router
