@@ -6,11 +6,12 @@ const User = mongoose.model('User')
 const authentication = async (req, res, next) => {
     
     const { authorization } = req.headers
+    console.log(authorization)
     if (!authorization)
             return res.status(401).json({ message: "Please login first." })
-        
-    const token = authorization.replace('Bearer ', '');
     
+    const token = authorization.replace('Bearer ', '');
+    console.log(token)
     const jwttoken = jwt.verify(token, 'tokenit')
 
     if (!jwttoken)

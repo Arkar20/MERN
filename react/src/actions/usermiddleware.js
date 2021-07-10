@@ -12,17 +12,21 @@ export const applyUserMiddlware = dispatch => action => {
         }).catch(error => {
           return  errorMessage(error.response.data.error)
         })
-        case (types.SIGN_IN):
+      case (types.SIGN_IN):
         return axios.post('/signin', action.payload).then(res => {
             localStorage.setItem('token', res.data.token)
             localStorage.setItem('signin_user',JSON.stringify(res.data.authuser))
-            dispatch({type:'SIGN_IN',payload:localStorage.getItem('signin_user')})
             successMessage("Login Successful")
-            history.push('/posts')
+           return  history.push('/posts')
         }).catch(error => {
             if(error)
-                errorMessage(error.response.data.error)
+               return errorMessage(error.response.data.error)
         })
+      
+      case (types.GET_PROFILE):
+        return axios.get(`/profile/${action.payload}`).then(res => {
+            dispatch({type:types.GET_PROFILE,payload:res.data})
+          })
         default:
             return null
     }

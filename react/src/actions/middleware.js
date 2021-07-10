@@ -43,14 +43,23 @@ export const applyMiddlware = dispatch => action => {
        
         })
         case (types.ADD_COMMENT):
-            console.log(action.payload.id)
+          
             return   axios.put(`/api/posts/${action.payload.id}/comment`,{body:action.payload.comment} , {
             headers: {"Authorization":`Bearer ${localStorage.getItem('token')}`}
             }).then(res =>
                 {console.log(res.data.result)
                 successMessage("Comment added successfully")
                return dispatch({type:types.ADD_COMMENT,payload:res.data.result})}
-        )
+            )
+        
+        case (types.FOLLOW_USER):
+            return axios.put(`/api/users/${action.payload}/follow`, null, {
+            headers: {"Authorization": `Bearer ${localStorage.getItem('token')}`}
+            }).then(res => {
+                console.log(res.data.result)
+                return successMessage("Comment added successfully")
+            }
+            )
         default:
             return null;
         }

@@ -1,4 +1,6 @@
-const Progress = ({progress}) => {
+import React from "react";
+
+const Progress = ({ progress }) => {
     return(
                <div style={{ display: 'block',width:"100%" }}>
                         {

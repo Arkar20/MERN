@@ -1,13 +1,15 @@
-import {React,useState,useEffect} from 'react';
+import {React,useState,useEffect,useContext} from 'react';
 import { useParams } from 'react-router-dom'
 import LoadingStatus from '../components/LoadingStatus'
-import axios from 'axios'
+import {PostContext} from '../App'
 
-const ProfileLoaded = ({ profile,follow }) => {
-    
-    
+const ProfileLoaded = ({ profile, follow }) => {
+    const { actions } = useContext(PostContext)
 
-   
+ 
+    const handleFollow = async() => {
+       actions.followUser(profile.user.id)
+    }
     return (
          <>
             
@@ -23,11 +25,11 @@ const ProfileLoaded = ({ profile,follow }) => {
                     <h4 className="uppercase">{profile.user.email}</h4>
                     <div style={{display:"flex",flexDirection:'row',justifyContent: 'space-between',width:"60%"}}>
                         <h6>{ profile.posts.length} posts</h6>
-                     <h6>100 followers</h6>
-                    <h6>100 following</h6>
+                     <h6>{profile.user.followers.length} followers</h6>
+                    <h6>{profile.user.following.length} following</h6>
                     </div>
 
-                    {follow && <button className="btn btn-primary">Follow</button>}
+                    {follow && <button className="btn btn-primary" onClick={handleFollow}>Follow</button>}
                  
                 </div>
             </div>
@@ -36,6 +38,7 @@ const ProfileLoaded = ({ profile,follow }) => {
                 {
                     profile.posts.map(post =>
                         <img
+                        key={post.id}
                         alt={post.title}
                         src={post.pic}
                         className="gallary-img"/>)
@@ -48,26 +51,24 @@ const ProfileLoaded = ({ profile,follow }) => {
 }
 
 const Profile = () => {
+    const { userstate,useractions } = useContext(PostContext) 
     const { userid } = useParams();
-    const [profile, setProfile] = useState(null)
     const [visible, setVisible] = useState(true)
-    useEffect(() =>
-    {
-        if(!profile)
-            axios.get(`/profile/${userid}`).then(res => {
-                setProfile(res.data.profile)
-              
-            })
+    const authuser = JSON.parse(localStorage.getItem("signin_user"))
+    
+
+    useEffect(() => {
+        useractions.getprofile(userid);
+         
+        (authuser.id == userid) && setVisible(false)
+       
         
-    },[profile])
-
+    }, [userid])
     
-    
-
     return (
-        profile
-            ? <ProfileLoaded profile={profile} follow={visible}/>
-        :<LoadingStatus />
+        userstate
+        ?   <ProfileLoaded profile={userstate.profile} follow={visible}/>
+        :   <LoadingStatus />
 
     )
 }

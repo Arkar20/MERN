@@ -6,12 +6,13 @@ import SinglePost from '../components/SinglePost'
 import LoadingStatus from '../components/LoadingStatus';
 
 const Post = () => {
-    const {state,actions}=useContext(PostContext)
+    const {userstate,state,actions}=useContext(PostContext)
     useEffect(() => {
         if (!state) {
             actions.fetchAllPosts();
         }
     }, [state])
+
 
 
     return (

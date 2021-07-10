@@ -25,7 +25,8 @@ export const types = {
     LIKE_THE_POST: "LIKE_THE_POST",
     UNLIKE_THE_POST: 'UNLIKE_THE_POST',
     CREATE_POST: "CREATE_POST",
-    ADD_COMMENT:"ADD_COMMENT",
+    ADD_COMMENT: "ADD_COMMENT",
+    FOLLOW_USER:"FOLLOW_USER"
     
 }
 
@@ -49,6 +50,9 @@ const postReducer = (state=[],action) => {
                     comments:action.payload.comments
                 }
             })
+        case (types.FOLLOW_USER): 
+                 return state
+        
     
         default:
             return state

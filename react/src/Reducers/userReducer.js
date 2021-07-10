@@ -1,6 +1,7 @@
 export const types = {
    
     SIGN_IN: "SIGN_IN",
+    GET_PROFILE:"GET_PROFILE"
     
 }
 

@@ -7,7 +7,7 @@ const Comment = ({ post }) => {
     const [comment,setComment]=useState(false)
     const { actions } = useContext(PostContext)
     const [visible,setVisible] =useState(false)
-  
+    console.log(post)
     const addcomment = (e) => {
         e.preventDefault()
         console.log(post.id)
@@ -30,8 +30,8 @@ const Comment = ({ post }) => {
                   visible &&  post.comments.map(comment => {
                         return (
                            <div key={comment._id}>
-                            <p>{comment.body}</p>
-                            <p>{comment.userid.name}</p>
+                            <p>{comment.body} by {comment.userid.name}</p>
+                       
                         </div>
                        )
                     }

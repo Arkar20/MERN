@@ -10,6 +10,9 @@ export const useAction = (state, dispatch) => ({
     },
     addComment: data => {
         return dispatch({ type: types.ADD_COMMENT, payload: data })
+    },
+    followUser: data => {
+        return dispatch({ type: types.FOLLOW_USER, payload:data})
     }
 
 })

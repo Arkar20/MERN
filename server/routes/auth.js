@@ -43,8 +43,8 @@ router.post('/signin', async (req, res) => {
     if (!email || !password)
         return res.status(422).json({ error: "Filed cannot be null" })
     
-   const dbuser= await User.findOne({email})
-    
+    let dbuser= await User.findOne({email})
+  
     if (!dbuser)
         return res.status(422).json({ error: "Seems like you have not registered yet!" })
         
@@ -54,7 +54,9 @@ router.post('/signin', async (req, res) => {
     if (pwcorrect) {
         const jwttoken = jwt.sign({ _id: dbuser._id }, "tokenit")
         
-        return  res.status(200).json({token:jwttoken,authuser:{_id:dbuser._id,name:dbuser.name,email:dbuser.email}})
+        dbuser.password = null
+        
+        return  res.status(200).json({token:jwttoken,authuser:dbuser})
     }
     return res.status(400).json({error:"incorrect password"})
     
@@ -63,8 +65,10 @@ router.post('/signin', async (req, res) => {
 //profile
 router.get('/profile/:user', async (req, res) => {
     const userid = req.params.user
+
     const user= await User.findById(userid).catch(err=>res.status(500).json({err}))
-    const posts=await Post.find({postowner:userid}).catch(err=>res.send(err))
+    const posts = await Post.find({ postowner: userid }).catch(err => res.send(err))
+    
     return res.status(200).json({profile:{user,posts}})
 })
 

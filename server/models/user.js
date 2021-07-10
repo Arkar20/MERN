@@ -19,6 +19,13 @@ const userSchema = mongoose.Schema({
         ref: "User",
         
       }
+    }],
+    following: [{
+      followingid: {
+        type: ObjectId,
+        ref: "User",
+        
+      }
     }]
 })
 userSchema.set('toJSON', {

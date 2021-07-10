@@ -10,7 +10,6 @@ const User = mongoose.model('User')
 
 router.put('/posts/:post/comment',authentication ,async(req, res) => {
     const postid = req.params.post
-
     const post = await Post.findByIdAndUpdate(postid, {
         $push:{comments:{ userid:req.authuserdata._id ,body:req.body.body}}
     }, { new: true }).exec((error, result) => {
@@ -23,6 +22,7 @@ router.put('/posts/:post/comment',authentication ,async(req, res) => {
    
   
 })
+
 
 
 module.exports = router

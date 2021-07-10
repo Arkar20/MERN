@@ -6,7 +6,7 @@ const AuthLinks = ({profile}) => (
           <Link to="/post">New Post</Link>
        </li>
         <li>
-          <Link to={`/profile/${profile._id}`}>Profile</Link>
+          <Link to={`/profile/${profile.id}`}>Profile</Link>
        </li>
   </>
 )
@@ -37,7 +37,7 @@ const Navbar = () => {
           </Link>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
           {state ? <AuthLinks profile={ profile}/>
-          :<GuestLinks /> 
+            :<GuestLinks /> 
         }
      
           </ul>

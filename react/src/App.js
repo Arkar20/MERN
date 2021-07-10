@@ -24,7 +24,7 @@ const App = () => {
   const actions = useAction(state, enhanceDispatch)
 
   //for users
-  const [userstate, userdispatch] = useReducer(userReducer, {})
+  const [userstate, userdispatch] = useReducer(userReducer,  )
   const enhanceUserDispatch = applyUserMiddlware(userdispatch)
   const useractions = userActions(userstate,enhanceUserDispatch)
   

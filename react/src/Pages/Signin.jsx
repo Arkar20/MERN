@@ -13,9 +13,9 @@ const Signin = () => {
     const history =useHistory()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    console.log(userstate)
     const SignIn = () => {
-        useractions.signin()
+        const data={email,password}
+        useractions.signin(data)
         // axios.post('/signin', {  email, password }).then(res => {
         //     localStorage.setItem('token', res.data.token)
         //     localStorage.setItem('signin_user',JSON.stringify(res.data.authuser))
